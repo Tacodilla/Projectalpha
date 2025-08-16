@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://deplmnrmb34eg"]
+[gd_scene load_steps=11 format=3 uid="uid://deplmnrmb34eg"]
 
 [ext_resource type="PackedScene" uid="uid://fu1wyopr40ee" path="res://Scenes/ProximitySpawner.tscn" id="1_754fn"]
 [ext_resource type="PackedScene" uid="uid://bjsqd3dbmmotv" path="res://Scenes/enemy_shooter.tscn" id="2_bvt00"]
 [ext_resource type="Script" uid="uid://b56fiqaqh6niq" path="res://Scripts/world.gd" id="3_oqgf2"]
+[ext_resource type="Script" uid="uid://dg6ldjal83lgo" path="res://Scripts/SpawnTester.gd" id="4_bvt00"]
+[ext_resource type="PackedScene" uid="uid://di12k6ss2jgk5" path="res://Scenes/LootPickup.tscn" id="4_oqgf2"]
 [ext_resource type="PackedScene" uid="uid://lyfvuw5p7k4e" path="res://Scenes/player.tscn" id="4_qxfql"]
 [ext_resource type="PackedScene" uid="uid://bbb8ufehle6j6" path="res://Scenes/enemy_gunship.tscn" id="5_ha31o"]
 [ext_resource type="PackedScene" uid="uid://cvkcf6q7n7kj2" path="res://Scenes/HUD.tscn" id="6_pa6b8"]
@@ -15,11 +17,16 @@
 position = Vector2(7, 2)
 enemy_scene = ExtResource("2_bvt00")
 
-[node name="World" type="Node2D" parent="."]
+[node name="World" type="Node2D" parent="." groups=["World"]]
 script = ExtResource("3_oqgf2")
 background_far_path = NodePath("../BackgroundFar")
 player_path = NodePath("../Ship")
+loot_pickup_scene = ExtResource("4_oqgf2")
 background_mode = 1
+spawn_test_loot_on_start = true
+
+[node name="SpawnTester" type="Node2D" parent="World"]
+script = ExtResource("4_bvt00")
 
 [node name="Ship" parent="." instance=ExtResource("4_qxfql")]
 position = Vector2(982, 588)

@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.4", "Mobile")
 
 [autoload]
 
-Db="*res://Scripts/DB.gd"
+DB="*res://Scripts/DB.gd"
 
 [input]
 

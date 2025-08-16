@@ -1,4 +1,4 @@
-# world.gd (Godot 4) — backgrounds + loot glue + inventory print (typed & safe)
+# world.gd (Godot 4) — backgrounds + loot glue + Inspector-set pickup scene
 extends Node2D
 
 # ---- Scene refs (hook these in the Inspector)
@@ -6,6 +6,7 @@ extends Node2D
 @export var background_near_path: NodePath     # optional
 @export var player_path: NodePath              # REQUIRED
 @export var hud_path: NodePath                 # optional
+@export var loot_pickup_scene: PackedScene     # <-- assign res://Scenes/LootPickup.tscn here
 
 # ---- Game options
 @export var start_paused: bool = false
@@ -47,17 +48,22 @@ var LootPickupScene: PackedScene = null
 @onready var DBRef: Node = get_node_or_null("/root/DB")
 
 func _ready() -> void:
-	# Tag this node so helpers (like DropOnDeath) can find us.
+	# Tag this node so helpers can find us.
 	if not is_in_group("world"):
 		add_to_group("world")
 
 	get_tree().paused = start_paused
 
-	# Safe load of LootPickup.tscn
-	if ResourceLoader.exists("res://LootPickup.tscn"):
-		LootPickupScene = load("res://LootPickup.tscn") as PackedScene
+	# Prefer Inspector-assigned pickup scene; otherwise try common paths.
+	if loot_pickup_scene:
+		LootPickupScene = loot_pickup_scene
 	else:
-		push_warning('LootPickup.tscn not found at res:// (create it and attach LootPickup.gd).')
+		if ResourceLoader.exists("res://LootPickup.tscn"):
+			LootPickupScene = load("res://LootPickup.tscn") as PackedScene
+		elif ResourceLoader.exists("res://Scenes/LootPickup.tscn"):
+			LootPickupScene = load("res://Scenes/LootPickup.tscn") as PackedScene
+		else:
+			push_warning('LootPickup scene not found. Assign one to "loot_pickup_scene" in the Inspector.')
 
 	# Player setup
 	if player:
@@ -92,10 +98,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			pressed_inventory = true
 
 	if pressed_inventory:
-		var inv: Node = _get_inventory()
+		var inv = _get_inventory()
 		if inv:
-			var items: Dictionary = inv.call("all_items")
-			var credits: int = int(inv.get("credits"))
+			var items = inv.call("all_items")
+			var credits = int(inv.get("credits"))
 			print("CARGO:", items, " | CREDITS:", credits)
 
 # -------------------- Background control --------------------
@@ -164,18 +170,22 @@ func spawn_loot_from_table(table_id: String, where: Vector2, attract_to: Node2D 
 		push_warning("DB autoload not found at /root/DB; cannot roll loot.")
 		return
 	if LootPickupScene == null:
-		push_warning("LootPickupScene not loaded; create res://LootPickup.tscn.")
+		push_warning("LootPickupScene not loaded; assign it in the Inspector.")
 		return
 
 	var drops: Array = DBRef.call("roll_loot", StringName(table_id))
 	for d in drops:
-		var lp: Area2D = LootPickupScene.instantiate()
+		var lp = LootPickupScene.instantiate()
 		add_child(lp)
-		lp.global_position = where + Vector2(randf_range(-10.0, 10.0), randf_range(-10.0, 10.0))
-		lp.set("item_id", StringName(d["id"]))
-		lp.set("quantity", int(d["qty"]))
-		if attract_to and lp.has_method("set_target"):
-			lp.set_target(attract_to)
+		if lp is Area2D:
+			var a2d: Area2D = lp
+			a2d.global_position = where + Vector2(randf_range(-10.0, 10.0), randf_range(-10.0, 10.0))
+			a2d.set("item_id", StringName(d["id"]))
+			a2d.set("quantity", int(d["qty"]))
+			if attract_to and a2d.has_method("set_target"):
+				a2d.call("set_target", attract_to)
+		else:
+			lp.set("position", where)
 
 # -------------------- Game flow & helpers --------------------
 
@@ -201,9 +211,9 @@ func restart_level() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
-func _get_inventory() -> Node:
+func _get_inventory():
 	if player:
-		var inv: Node = player.get_node_or_null("Inventory")
+		var inv = player.get_node_or_null("Inventory")
 		if inv:
 			return inv
 	return null
