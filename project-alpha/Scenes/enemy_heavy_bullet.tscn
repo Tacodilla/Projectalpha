@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdfw5l80a17p7"]
+
+[ext_resource type="Script" uid="uid://byvjv7rlu0j7x" path="res://Scripts/enemy_heavy_bullet.gd" id="1_gnou3"]
+[ext_resource type="Texture2D" uid="uid://c2p541yha4qc8" path="res://Assets/laserBlue01.png" id="1_w53lw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnou3"]
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 128
+script = ExtResource("1_gnou3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_w53lw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gnou3")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

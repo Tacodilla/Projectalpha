@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=3 uid="uid://deplmnrmb34eg"]
+
+[ext_resource type="PackedScene" uid="uid://lyfvuw5p7k4e" path="res://player.tscn" id="1_vonw3"]
+[ext_resource type="PackedScene" uid="uid://bjsqd3dbmmotv" path="res://enemy_shooter.tscn" id="2_oi3di"]
+[ext_resource type="PackedScene" uid="uid://cvkcf6q7n7kj2" path="res://HUD.tscn" id="3_oi3di"]
+[ext_resource type="PackedScene" uid="uid://bbb8ufehle6j6" path="res://enemy_gunship.tscn" id="4_0b4ue"]
+[ext_resource type="PackedScene" uid="uid://fu1wyopr40ee" path="res://ProximitySpawner.tscn" id="4_f2txt"]
+[ext_resource type="Script" uid="uid://xnd0g23x3uij" path="res://star_parallax.gd" id="6_2orkt"]
+[ext_resource type="Texture2D" uid="uid://bk64naxc7ns5o" path="res://black.png" id="6_i2t4f"]
+[ext_resource type="Texture2D" uid="uid://ba4w8s204ct4h" path="res://blue.png" id="7_8cye3"]
+[ext_resource type="Texture2D" uid="uid://dkcua04p2dfyq" path="res://darkPurple.png" id="8_2orkt"]
+[ext_resource type="Texture2D" uid="uid://b7cun25kdrwoy" path="res://purple.png" id="9_aicyk"]
+[ext_resource type="Script" uid="uid://b56fiqaqh6niq" path="res://world.gd" id="11_2orkt"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Ship" parent="." instance=ExtResource("1_vonw3")]
+position = Vector2(982, 588)
+
+[node name="Enemy3" parent="." instance=ExtResource("4_0b4ue")]
+position = Vector2(909, 57)
+scale = Vector2(1.5, 1.5)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("3_oi3di")]
+
+[node name="ProximitySpawner" parent="." instance=ExtResource("4_f2txt")]
+position = Vector2(7, 2)
+enemy_scene = ExtResource("2_oi3di")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource("6_2orkt")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+texture_repeat = 2
+texture = ExtResource("6_i2t4f")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture_repeat = 2
+texture = ExtResource("7_8cye3")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 0.7)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+texture_repeat = 2
+texture = ExtResource("8_2orkt")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("9_aicyk")
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("11_2orkt")

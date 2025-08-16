@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvkcf6q7n7kj2"]
+
+[ext_resource type="Script" uid="uid://b4y1jb6tpywne" path="res://Scripts/hud.gd" id="1_k5de2"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_k5de2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerHPLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="EnemyCountLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2

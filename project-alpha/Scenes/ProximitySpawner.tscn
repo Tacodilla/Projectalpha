@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://fu1wyopr40ee"]
+
+[ext_resource type="Script" uid="uid://du6bmoaa3kttb" path="res://Scripts/proximity_spawner.gd" id="1"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 500.0
+
+[node name="ProximitySpawner" type="Area2D"]
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="SpawnPoint1" type="Marker2D" parent="."]
+position = Vector2(150, 0)
+
+[node name="SpawnPoint2" type="Marker2D" parent="."]
+position = Vector2(-150, 0)

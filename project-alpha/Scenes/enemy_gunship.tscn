@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbb8ufehle6j6"]
+
+[ext_resource type="Script" uid="uid://cu66uajnopbdt" path="res://Scripts/enemy_gunship.gd" id="1_c1gd8"]
+[ext_resource type="PackedScene" uid="uid://bdfw5l80a17p7" path="res://Scenes/enemy_heavy_bullet.tscn" id="2_6hlax"]
+[ext_resource type="Texture2D" uid="uid://ddvc06e7idijh" path="res://Assets/ufoRed.png" id="3_5lvkp"]
+[ext_resource type="Script" uid="uid://crbl83ai7m8ym" path="res://Scripts/drop_on_death.gd" id="4_co4ur"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("1_c1gd8")
+bullet_scene = ExtResource("2_6hlax")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_5lvkp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4gyqm")
+
+[node name="DropOnDeath" type="Node2D" parent="."]
+script = ExtResource("4_co4ur")
+debug_logs = true

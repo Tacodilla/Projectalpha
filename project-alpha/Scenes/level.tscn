@@ -1,0 +1,36 @@
+[gd_scene load_steps=9 format=3 uid="uid://deplmnrmb34eg"]
+
+[ext_resource type="PackedScene" uid="uid://fu1wyopr40ee" path="res://Scenes/ProximitySpawner.tscn" id="1_754fn"]
+[ext_resource type="PackedScene" uid="uid://bjsqd3dbmmotv" path="res://Scenes/enemy_shooter.tscn" id="2_bvt00"]
+[ext_resource type="Script" uid="uid://b56fiqaqh6niq" path="res://Scripts/world.gd" id="3_oqgf2"]
+[ext_resource type="PackedScene" uid="uid://lyfvuw5p7k4e" path="res://Scenes/player.tscn" id="4_qxfql"]
+[ext_resource type="PackedScene" uid="uid://bbb8ufehle6j6" path="res://Scenes/enemy_gunship.tscn" id="5_ha31o"]
+[ext_resource type="PackedScene" uid="uid://cvkcf6q7n7kj2" path="res://Scenes/HUD.tscn" id="6_pa6b8"]
+[ext_resource type="Script" uid="uid://c3h7p2sjc1uw7" path="res://Scripts/background.gd" id="7_crh0w"]
+[ext_resource type="Texture2D" uid="uid://wj13lk2o3ivh" path="res://Assets/black.png" id="8_c7le1"]
+
+[node name="Level" type="Node2D"]
+
+[node name="ProximitySpawner" parent="." instance=ExtResource("1_754fn")]
+position = Vector2(7, 2)
+enemy_scene = ExtResource("2_bvt00")
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("3_oqgf2")
+background_far_path = NodePath("../BackgroundFar")
+player_path = NodePath("../Ship")
+background_mode = 1
+
+[node name="Ship" parent="." instance=ExtResource("4_qxfql")]
+position = Vector2(982, 588)
+
+[node name="Enemy3" parent="." instance=ExtResource("5_ha31o")]
+position = Vector2(909, 57)
+scale = Vector2(1.5, 1.5)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("6_pa6b8")]
+
+[node name="BackgroundFar" type="Node2D" parent="."]
+script = ExtResource("7_crh0w")
+texture = ExtResource("8_c7le1")
+scroll_px_per_sec = Vector2(0, 2)

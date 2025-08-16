@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://lyfvuw5p7k4e"]
+
+[ext_resource type="Script" uid="uid://bepjmob78lqrv" path="res://Scripts/node_2d.gd" id="1_i3pqv"]
+[ext_resource type="PackedScene" uid="uid://dn6a1hmeyaru7" path="res://Scenes/bullet.tscn" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://q11k42kk2t46" path="res://Assets/playerShip1_blue.png" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://deulyy1a2a1rs" path="res://Scripts/inventory.gd" id="4_hqtel"]
+[ext_resource type="Script" uid="uid://bcv6808oi1ugb" path="res://Scripts/pickup_proxy.gd" id="5_sweqy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q6r6c"]
+
+[node name="Ship" type="Area2D" groups=["player"]]
+collision_mask = 0
+script = ExtResource("1_i3pqv")
+bullet_scene = ExtResource("2_i3pqv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_onrkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q6r6c")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource("4_hqtel")
+
+[node name="PickupProxy" type="Node2D" parent="."]
+script = ExtResource("5_sweqy")

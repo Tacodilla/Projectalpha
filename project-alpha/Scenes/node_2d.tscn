@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddwje51ble7e5"]
+
+[ext_resource type="Script" uid="uid://bepjmob78lqrv" path="res://Scripts/node_2d.gd" id="2_0e48y"]
+[ext_resource type="Texture2D" uid="uid://q11k42kk2t46" path="res://Assets/playerShip1_blue.png" id="2_epypp"]
+[ext_resource type="PackedScene" uid="uid://bjsqd3dbmmotv" path="res://Scenes/enemy_shooter.tscn" id="3_0hol4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q6r6c"]
+
+[node name="Ship" type="CharacterBody2D" groups=["player"]]
+collision_mask = 0
+script = ExtResource("2_0e48y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_epypp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_q6r6c")
+
+[node name="Enemy" parent="." instance=ExtResource("3_0hol4")]
+position = Vector2(-72.7505, -39.8339)
+
+[node name="Enemy2" parent="." instance=ExtResource("3_0hol4")]
+position = Vector2(125.212, -56.9377)

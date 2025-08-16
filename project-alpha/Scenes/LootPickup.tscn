@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://di12k6ss2jgk5"]
+
+[ext_resource type="Script" uid="uid://bby8dbna545sa" path="res://Scripts/LootPickup.gd" id="1_d3sty"]
+[ext_resource type="Texture2D" uid="uid://gn8bh61rdvwp" path="res://Assets/Main ship weapon - Projectile - single cannon.png" id="2_rr2bf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_srm1f"]
+
+[node name="LootPickup" type="Area2D"]
+script = ExtResource("1_d3sty")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_srm1f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_rr2bf")
